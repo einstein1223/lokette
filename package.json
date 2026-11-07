@@ -1,0 +1,7 @@
+{
+  "name": "lokette",
+  "version": "1.0.0",
+  "description": "Lokette - Cek Status PO & Akses Semua Link Resmi",
+  "type": "module",
+  "private": true
+}
