@@ -15,6 +15,9 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    screens: {
+                        'xs': '420px',
+                    },
                     colors: {
                         cream: {
                             bg: '#FDF3E6',
@@ -266,15 +269,14 @@
     <!-- BAGIAN 1: FULL-SCREEN FIRST FOLD (100VH LANDING VIEW)                 -->
     <!-- Saat pertama dibuka, tampil penuh 1 layar. Scroll untuk ke bawah.     -->
     <!-- ===================================================================== -->
-    <div id="top-home" class="relative z-10 min-h-screen flex flex-col justify-between w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-5 sm:px-8 pt-4 sm:pt-6 pb-5">
+    <div id="top-home" class="relative z-10 min-h-screen flex flex-col justify-between w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-8 pt-3 sm:pt-6 pb-4 sm:pb-5">
         
         <header class="relative z-30 hero-anim-1">
-    <nav class="bg-white/95 backdrop-blur-md rounded-full px-6 sm:px-8 py-3.5 sm:py-4 shadow-soft flex items-center justify-between border border-white">
-        <!-- Logo Lokette -->
-        <a href="#top-home" class="inline-flex items-center select-none group">
-            <!-- Ubah src="..." sesuai dengan lokasi file PNG milikmu -->
-            <img src="logo_lokette.png" alt="Logo Lokette" class="h-8 sm:h-10 w-auto object-contain group-hover:scale-105 transition-transform">
-        </a>
+            <nav class="bg-white/95 backdrop-blur-md rounded-full px-4 sm:px-8 py-2.5 sm:py-3.5 shadow-soft flex items-center justify-between border border-white">
+                <!-- Logo Lokette -->
+                <a href="#top-home" class="inline-flex items-center select-none group">
+                    <img src="logo_lokette.png" alt="Logo Lokette" class="h-7 sm:h-9 md:h-10 w-auto object-contain group-hover:scale-105 transition-transform">
+                </a>
 
                 <!-- Navigasi Desktop (Muncul di layar md ke atas) -->
                 <div class="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-extrabold text-charcoal">
@@ -290,12 +292,12 @@
 
                 <!-- Tombol Hamburger (Tampil di Mobile) -->
                 <button id="menuBtn" aria-label="Buka Menu" class="md:hidden p-1.5 rounded-xl text-coral hover:bg-cream-input transition-colors focus:outline-none">
-                    <svg id="menuIconOpen" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" viewBox="0 0 24 24">
+                    <svg id="menuIconOpen" class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" viewBox="0 0 24 24">
                         <line x1="4" y1="6.5" x2="20" y2="6.5"></line>
                         <line x1="4" y1="12" x2="20" y2="12"></line>
                         <line x1="4" y1="17.5" x2="20" y2="17.5"></line>
                     </svg>
-                    <svg id="menuIconClose" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" viewBox="0 0 24 24">
+                    <svg id="menuIconClose" class="w-6 h-6 sm:w-7 sm:h-7 hidden" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" viewBox="0 0 24 24">
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                         <line x1="6" y1="18" x2="18" y2="6"></line>
                     </svg>
@@ -303,7 +305,7 @@
             </nav>
 
             <!-- Dropdown Menu Mobile Interaktif -->
-            <div id="mobileMenu" class="hidden md:hidden absolute left-0 right-0 mt-2 bg-white rounded-3xl p-4 shadow-card border border-cream-field z-40 transition-all">
+            <div id="mobileMenu" class="hidden md:hidden absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-3xl p-3 sm:p-4 shadow-card border border-cream-field z-40 transition-all">
                 <ul class="space-y-1 text-charcoal font-bold text-sm">
                     <li>
                         <a href="#cek-status" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-2.5 rounded-2xl hover:bg-cream-input text-coral transition-colors">
@@ -335,39 +337,33 @@
         </header>
 
         <!-- TENGAH LAYAR PERTAMA: HERO + KARTU LACAK RESI UTAMA -->
-        <div class="my-auto py-5 sm:py-6 w-full max-w-2xl mx-auto">
+        <div class="my-auto py-4 sm:py-6 w-full max-w-2xl mx-auto">
             
-            <!-- 1.5 LIVE PENGUMUMAN / INFO BATCH BANNER -->
-            
-
             <!-- 2. HERO SECTION -->
             <section class="relative md:text-center hero-anim-2">
                 <!-- Garis pendek kuning di atas judul -->
                 <div class="w-10 sm:w-12 h-1.5 bg-sunny rounded-full mb-2.5 md:mx-auto"></div>
 
-                <!-- Judul Utama dengan Dekorasi Sparkle Kuning Animasi -->
-                <div class="relative pr-6 md:pr-0 inline-block">
-                    <h1 class="text-[26px] sm:text-[34px] lg:text-[38px] font-extrabold text-coral leading-[1.2] tracking-tight">
+                <!-- Judul Utama -->
+                <div class="relative inline-block">
+                    <h1 class="text-[23px] xs:text-[27px] sm:text-[34px] lg:text-[38px] font-extrabold text-coral leading-[1.25] tracking-tight">
                         Cek Status PO & Akses Semua Link Resmi Lokette!
                     </h1>
-                    
-                    
+                </div>
 
                 <!-- Subjudul -->
-                <p class="mt-2.5 text-[13.5px] sm:text-[15.5px] font-semibold text-coral/90 leading-relaxed pr-2 md:pr-0 max-w-xl md:mx-auto">
+                <p class="mt-2 text-[13px] sm:text-[15.5px] font-semibold text-coral/90 leading-relaxed max-w-xl md:mx-auto">
                     Pantau pengiriman barangmu, cek lokasi, dan akses semua link resmi dari Lokette dalam satu tempat.
                 </p>
 
-               
-
                 <!-- Tombol Kapsul Utama: "Daftar Batch PO" -->
-                <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
+                <div class="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-3">
                     <button 
                         type="button"
                         onclick="openPoModal()" 
-                        class="bg-coral hover:bg-coral-dark active:scale-95 text-white font-extrabold text-[14.5px] sm:text-[15.5px] px-7 sm:px-9 py-3 rounded-full shadow-pill inline-flex items-center gap-2.5 transition-bounce hover:-translate-y-0.5 cursor-pointer">
+                        class="bg-coral hover:bg-coral-dark active:scale-95 text-white font-extrabold text-[13.5px] sm:text-[15.5px] px-6 sm:px-9 py-2.5 sm:py-3 rounded-full shadow-pill inline-flex items-center gap-2 transition-bounce hover:-translate-y-0.5 cursor-pointer">
                         <span>Daftar Batch PO</span>
-                        <!-- Ikon Copy / Daftar PO -->
+                        <!-- Ikon Daftar PO -->
                         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -377,11 +373,11 @@
             </section>
 
             <!-- 3. KARTU UTAMA: LACAK RESI & CEK STATUS PO -->
-            <section id="cek-status" class="mt-5 sm:mt-6 hero-anim-3">
-                <div class="bg-cream-card/95 backdrop-blur-xs rounded-[28px] p-4 sm:p-6 shadow-card border border-white">
+            <section id="cek-status" class="mt-4 sm:mt-6 hero-anim-3">
+                <div class="bg-cream-card/95 backdrop-blur-xs rounded-[24px] sm:rounded-[28px] p-3.5 sm:p-6 shadow-card border border-white">
                     
                     <!-- Header Mini Lacak Resi -->
-                    <div class="flex items-center justify-between mb-3 px-1">
+                    <div class="flex items-center justify-between mb-2.5 sm:mb-3 px-1">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-coral animate-pulse"></span>
                             <span class="text-xs sm:text-sm font-extrabold text-coral uppercase tracking-wider">Lacak Resi & Status PO</span>
@@ -403,7 +399,7 @@
                                 type="text" 
                                 placeholder="Masukkan no. resi atau nama" 
                                 autocomplete="off"
-                                class="w-full bg-transparent pl-5 pr-28 sm:pr-36 py-3.5 sm:py-4 text-sm sm:text-[15px] font-bold text-charcoal placeholder-[#A99E96] focus:outline-none rounded-full"
+                                class="w-full bg-transparent pl-4 sm:pl-5 pr-24 sm:pr-36 py-3 sm:py-4 text-xs sm:text-[15px] font-bold text-charcoal placeholder-[#A99E96] focus:outline-none rounded-full"
                             />
                             
                             <!-- Tombol Hapus Input (X) -->
@@ -412,7 +408,7 @@
                                 type="button" 
                                 onclick="resetSearch()" 
                                 title="Hapus pencarian"
-                                class="hidden absolute right-14 sm:right-28 text-[#A99E96] hover:text-coral p-1.5 transition-colors cursor-pointer">
+                                class="hidden absolute right-12 sm:right-28 text-[#A99E96] hover:text-coral p-1.5 transition-colors cursor-pointer">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                     <line x1="18" y1="6" x2="6" y2="18"></line>
                                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -424,8 +420,8 @@
                                 id="searchSubmitBtn"
                                 type="submit" 
                                 aria-label="Lacak Resi"
-                                class="absolute right-2 bg-coral hover:bg-coral-dark text-white font-extrabold text-xs sm:text-sm px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full flex items-center gap-1.5 shadow-xs transition-bounce active:scale-95 cursor-pointer">
-                                <span id="searchBtnText" class="hidden sm:inline">Lacak Resi</span>
+                                class="absolute right-1.5 sm:right-2 bg-coral hover:bg-coral-dark text-white font-extrabold text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2.5 rounded-full flex items-center gap-1.5 shadow-xs transition-bounce active:scale-95 cursor-pointer">
+                                <span id="searchBtnText" class="hidden xs:inline sm:inline">Lacak Resi</span>
                                 <span id="searchBtnIcon">
                                     <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                         <circle cx="11" cy="11" r="8"></circle>
@@ -440,79 +436,79 @@
                     <div id="resultContainer" class="hidden mt-4 pt-3 border-t border-cream-field space-y-2.5 transition-all duration-300">
                         
                         <!-- VISUAL STEP-BY-STEP TIMELINE PENGIRIMAN -->
-                        <div class="bg-cream-input border border-sunny/50 rounded-2xl p-3.5 sm:p-4 mb-3">
-                            <div class="flex items-center justify-between mb-2.5">
-                                <span class="text-[11px] sm:text-xs font-extrabold text-coral uppercase tracking-wider flex items-center gap-1.5">
+                        <div class="bg-cream-input border border-sunny/50 rounded-2xl p-3 sm:p-4 mb-3">
+                            <div class="flex items-center justify-between mb-2 sm:mb-2.5">
+                                <span class="text-[10.5px] sm:text-xs font-extrabold text-coral uppercase tracking-wider flex items-center gap-1.5">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
                                     </svg>
                                     Progres Lacak Resi
                                 </span>
-                                <span id="stepPercentage" class="text-[11px] font-extrabold bg-white text-coral px-2.5 py-0.5 rounded-full shadow-2xs">75%</span>
+                                <span id="stepPercentage" class="text-[10.5px] sm:text-[11px] font-extrabold bg-white text-coral px-2.5 py-0.5 rounded-full shadow-2xs">75%</span>
                             </div>
 
                             <!-- 4 Step Dots & Connecting Bar -->
                             <div class="relative flex items-center justify-between pt-1 pb-1">
                                 <!-- Background Line -->
-                                <div class="absolute left-4 right-4 top-4 h-1 bg-cream-blob/70 rounded-full z-0"></div>
+                                <div class="absolute left-[12%] right-[12%] top-3 sm:top-3.5 h-1 bg-cream-blob/70 rounded-full z-0"></div>
                                 <!-- Active Progress Line -->
-                                <div id="stepProgressLine" class="absolute left-4 top-4 h-1 bg-coral rounded-full z-0 transition-all duration-500" style="width: 66%;"></div>
+                                <div id="stepProgressLine" class="absolute left-[12%] top-3 sm:top-3.5 h-1 bg-coral rounded-full z-0 transition-all duration-500" style="width: 66%;"></div>
 
                                 <!-- Step 1 -->
                                 <div class="relative z-10 flex flex-col items-center text-center w-1/4">
-                                    <div id="stepDot1" class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold bg-coral text-white shadow-xs transition-all">1</div>
-                                    <span class="text-[10px] sm:text-[11px] font-bold text-charcoal mt-1.5 leading-tight">Order PO</span>
+                                    <div id="stepDot1" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[11px] sm:text-xs font-extrabold bg-coral text-white shadow-xs transition-all">1</div>
+                                    <span class="text-[9.5px] sm:text-[11px] font-bold text-charcoal mt-1 sm:mt-1.5 leading-tight truncate max-w-full px-0.5">Order PO</span>
                                 </div>
                                 <!-- Step 2 -->
                                 <div class="relative z-10 flex flex-col items-center text-center w-1/4">
-                                    <div id="stepDot2" class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold bg-coral text-white shadow-xs transition-all">2</div>
-                                    <span class="text-[10px] sm:text-[11px] font-bold text-charcoal mt-1.5 leading-tight">Warehouse</span>
+                                    <div id="stepDot2" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[11px] sm:text-xs font-extrabold bg-coral text-white shadow-xs transition-all">2</div>
+                                    <span class="text-[9.5px] sm:text-[11px] font-bold text-charcoal mt-1 sm:mt-1.5 leading-tight truncate max-w-full px-0.5">Warehouse</span>
                                 </div>
                                 <!-- Step 3 -->
                                 <div class="relative z-10 flex flex-col items-center text-center w-1/4">
-                                    <div id="stepDot3" class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold bg-coral text-white shadow-xs transition-all">3</div>
-                                    <span class="text-[10px] sm:text-[11px] font-bold text-charcoal mt-1.5 leading-tight">Shipping</span>
+                                    <div id="stepDot3" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[11px] sm:text-xs font-extrabold bg-coral text-white shadow-xs transition-all">3</div>
+                                    <span class="text-[9.5px] sm:text-[11px] font-bold text-charcoal mt-1 sm:mt-1.5 leading-tight truncate max-w-full px-0.5">Shipping</span>
                                 </div>
                                 <!-- Step 4 -->
                                 <div class="relative z-10 flex flex-col items-center text-center w-1/4">
-                                    <div id="stepDot4" class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold bg-white text-charcoal/50 border-2 border-cream-blob transition-all">4</div>
-                                    <span class="text-[10px] sm:text-[11px] font-bold text-charcoal/70 mt-1.5 leading-tight">Diterima</span>
+                                    <div id="stepDot4" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[11px] sm:text-xs font-extrabold bg-white text-charcoal/50 border-2 border-cream-blob transition-all">4</div>
+                                    <span class="text-[9.5px] sm:text-[11px] font-bold text-charcoal/70 mt-1 sm:mt-1.5 leading-tight truncate max-w-full px-0.5">Diterima</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Baris 1: No. Resi -->
-                        <div class="result-box bg-cream-field rounded-2xl px-4 sm:px-5 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all">
-                            <span class="font-extrabold text-charcoal text-[14.5px] sm:text-[15px]">No. Resi</span>
-                            <div class="flex items-center gap-2 mt-0.5 sm:mt-0">
-                                <span id="valResi" class="text-sm sm:text-[15px] font-extrabold text-coral"></span>
+                        <div class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
+                            <span class="font-extrabold text-charcoal text-[13.5px] sm:text-[15px]">No. Resi</span>
+                            <div class="flex items-center gap-2 mt-0.5 sm:mt-0 flex-wrap">
+                                <span id="valResi" class="text-sm sm:text-[15px] font-extrabold text-coral break-all"></span>
                                 <button type="button" onclick="copyCurrentResi()" class="text-xs bg-white hover:bg-coral hover:text-white text-coral font-bold px-2.5 py-0.5 rounded-lg transition-colors shadow-2xs cursor-pointer">Salin No. Resi</button>
                             </div>
                         </div>
 
                         <!-- Baris 2: No. PO -->
-                        <div class="result-box bg-cream-field rounded-2xl px-4 sm:px-5 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all">
-                            <span class="font-extrabold text-charcoal text-[14.5px] sm:text-[15px]">No. PO</span>
-                            <span id="valPO" class="text-sm sm:text-[15px] font-bold text-charcoal/80 mt-0.5 sm:mt-0"></span>
+                        <div class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
+                            <span class="font-extrabold text-charcoal text-[13.5px] sm:text-[15px]">No. PO</span>
+                            <span id="valPO" class="text-sm sm:text-[15px] font-bold text-charcoal/80 mt-0.5 sm:mt-0 break-all sm:text-right"></span>
                         </div>
 
                         <!-- Baris 3: Nama -->
-                        <div class="result-box bg-cream-field rounded-2xl px-4 sm:px-5 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all">
-                            <span class="font-extrabold text-charcoal text-[14.5px] sm:text-[15px]">Nama</span>
-                            <span id="valNama" class="text-sm sm:text-[15px] font-bold text-charcoal/80 mt-0.5 sm:mt-0"></span>
+                        <div class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
+                            <span class="font-extrabold text-charcoal text-[13.5px] sm:text-[15px]">Nama</span>
+                            <span id="valNama" class="text-sm sm:text-[15px] font-bold text-charcoal/80 mt-0.5 sm:mt-0 break-words sm:text-right"></span>
                         </div>
 
                         <!-- Baris 4: Status -->
-                        <div class="result-box bg-cream-field rounded-2xl px-4 sm:px-5 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all">
-                            <span class="font-bold text-charcoal text-[14.5px] sm:text-[15px]">Status</span>
-                            <span id="valStatus" class="text-xs sm:text-[13px] font-extrabold px-3 py-1 rounded-full mt-1 sm:mt-0 w-fit"></span>
+                        <div class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
+                            <span class="font-bold text-charcoal text-[13.5px] sm:text-[15px]">Status</span>
+                            <span id="valStatus" class="text-xs sm:text-[13px] font-extrabold px-3 py-1 rounded-full mt-0.5 sm:mt-0 w-fit"></span>
                         </div>
 
                         <!-- Baris 5: Keterangan -->
-                        <div class="result-box bg-cream-field rounded-2xl px-4 sm:px-5 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all">
-                            <span class="font-bold text-charcoal text-[14.5px] sm:text-[15px]">Keterangan</span>
-                            <span id="valKet" class="text-xs sm:text-sm font-semibold text-charcoal/75 mt-0.5 sm:mt-0 sm:text-right max-w-md"></span>
+                        <div class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
+                            <span class="font-bold text-charcoal text-[13.5px] sm:text-[15px]">Keterangan</span>
+                            <span id="valKet" class="text-xs sm:text-sm font-semibold text-charcoal/75 mt-0.5 sm:mt-0 sm:text-right max-w-md break-words"></span>
                         </div>
 
                         <!-- Tombol Aksi Cepat Tanya Admin tentang Resi Ini -->
@@ -549,8 +545,8 @@
     <!-- ===================================================================== -->
     <!-- BAGIAN 2: KONTEN BAWAH (MUNCUL DENGAN ANIMASI SAAT DI-SCROLL)         -->
     <!-- ===================================================================== -->
-    <div id="explore-more" class="relative z-10 w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-5 sm:px-8 pt-6 pb-12">
-        <div class="max-w-2xl mx-auto space-y-10 sm:space-y-12">
+    <div id="explore-more" class="relative z-10 w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-8 pt-6 pb-12">
+        <div class="max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto space-y-10 sm:space-y-12">
 
             <!-- 3.5 JADWAL & KUOTA BATCH PO AKTIF -->
             <section id="batch-aktif" class="reveal-on-scroll scroll-mt-8">
@@ -565,7 +561,7 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 lg:gap-5">
                     <!-- Batch Card 1: Doll BTS -->
                     <div class="reveal-on-scroll delay-100 bg-cream-card/95 rounded-2xl overflow-hidden shadow-soft border border-white flex flex-col justify-between transition-bounce hover:-translate-y-1 group">
                         <div>
@@ -727,12 +723,12 @@
                     </div>
 
                     <!-- Batch Card 5: Backpack Norvincy -->
-                    <div class="reveal-on-scroll delay-500 bg-cream-card/95 rounded-2xl overflow-hidden shadow-soft border border-white flex flex-col justify-between transition-bounce hover:-translate-y-1 sm:col-span-2 group">
+                    <div class="reveal-on-scroll delay-500 bg-cream-card/95 rounded-2xl overflow-hidden shadow-soft border border-white flex flex-col justify-between transition-bounce hover:-translate-y-1 sm:col-span-2 lg:col-span-1 group">
                         <div>
                             <!-- Foto Produk -->
-                            <div class="relative w-full h-48 sm:h-56 overflow-hidden bg-cream-field">
+                            <div class="relative w-full h-44 sm:h-48 overflow-hidden bg-cream-field">
                                 <img 
-                                    src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80" 
+                                    src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" 
                                     alt="Backpack Norvincy" 
                                     loading="lazy"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -915,28 +911,28 @@
                 </div>
 
                 <!-- Grid 2 Kartu Admin: Langsung Direct WhatsApp -->
-                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     
                     <!-- Kartu Admin Nicc: Langsung Direct WhatsApp -->
                     <a 
                         href="https://wa.me/6281374300617?text=Halo%20Admin%20Nicc%20Lokette%2C%20saya%20ingin%20bertanya%20pesanan%20atau%20PO." 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        class="reveal-left delay-100 bg-cream-card hover:bg-white active:scale-95 rounded-2xl p-3 sm:p-4 shadow-soft border border-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 transition-bounce hover:-translate-y-1 group cursor-pointer block">
-                        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        class="reveal-left delay-100 bg-cream-card hover:bg-white active:scale-95 rounded-2xl p-3.5 sm:p-4 shadow-soft border border-white flex items-center justify-between gap-3 transition-bounce hover:-translate-y-1 group cursor-pointer block">
+                        <div class="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
                             <!-- Lingkaran Hijau WhatsApp -->
-                            <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 group-hover:scale-110 shadow-sm transition-transform">
+                            <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 group-hover:scale-110 shadow-sm transition-transform">
                                 <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
                                     <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/>
                                 </svg>
                             </div>
                             <div class="min-w-0">
-                                <p class="text-coral group-hover:underline font-extrabold text-xs sm:text-[14px] leading-tight truncate">Admin Nicc</p>
-                                <p class="text-charcoal/80 font-bold text-[10.5px] sm:text-xs leading-tight mt-0.5 truncate">+62 813-7430-0617</p>
-                                <span class="inline-block mt-1 text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">💬 Chat Langsung</span>
+                                <p class="text-coral group-hover:underline font-extrabold text-sm sm:text-[15px] leading-tight truncate">Admin Nicc</p>
+                                <p class="text-charcoal/80 font-bold text-xs leading-tight mt-0.5 truncate">+62 813-7430-0617</p>
+                                <span class="inline-block mt-1 text-[10.5px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">💬 Chat WhatsApp</span>
                             </div>
                         </div>
-                        <span class="hidden sm:inline-flex items-center text-xs font-extrabold text-coral group-hover:translate-x-1 transition-transform">
+                        <span class="inline-flex items-center text-xs font-extrabold text-coral group-hover:translate-x-1 transition-transform shrink-0">
                             Chat ➔
                         </span>
                     </a>
@@ -946,21 +942,21 @@
                         href="https://wa.me/6289505626897?text=Halo%20Admin%20Lokette%2C%20saya%20ingin%20bertanya%20pesanan%20atau%20PO." 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        class="reveal-right delay-200 bg-cream-card hover:bg-white active:scale-95 rounded-2xl p-3 sm:p-4 shadow-soft border border-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 transition-bounce hover:-translate-y-1 group cursor-pointer block">
-                        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                        class="reveal-right delay-200 bg-cream-card hover:bg-white active:scale-95 rounded-2xl p-3.5 sm:p-4 shadow-soft border border-white flex items-center justify-between gap-3 transition-bounce hover:-translate-y-1 group cursor-pointer block">
+                        <div class="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
                             <!-- Lingkaran Hijau WhatsApp -->
-                            <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 group-hover:scale-110 shadow-sm transition-transform">
+                            <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 group-hover:scale-110 shadow-sm transition-transform">
                                 <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
                                     <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/>
                                 </svg>
                             </div>
                             <div class="min-w-0">
-                                <p class="text-coral group-hover:underline font-extrabold text-xs sm:text-[14px] leading-tight truncate">Admin Lokette</p>
-                                <p class="text-charcoal/80 font-bold text-[10.5px] sm:text-xs leading-tight mt-0.5 truncate">+62 895-0562-6897</p>
-                                <span class="inline-block mt-1 text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">💬 Chat Langsung</span>
+                                <p class="text-coral group-hover:underline font-extrabold text-sm sm:text-[15px] leading-tight truncate">Admin Lokette</p>
+                                <p class="text-charcoal/80 font-bold text-xs leading-tight mt-0.5 truncate">+62 895-0562-6897</p>
+                                <span class="inline-block mt-1 text-[10.5px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">💬 Chat WhatsApp</span>
                             </div>
                         </div>
-                        <span class="hidden sm:inline-flex items-center text-xs font-extrabold text-coral group-hover:translate-x-1 transition-transform">
+                        <span class="inline-flex items-center text-xs font-extrabold text-coral group-hover:translate-x-1 transition-transform shrink-0">
                             Chat ➔
                         </span>
                     </a>
@@ -1687,8 +1683,8 @@
         rel="noopener noreferrer"
         aria-label="Hubungi Admin WhatsApp"
         title="Chat WhatsApp Admin Langsung"
-        class="fixed bottom-6 left-5 sm:left-8 z-40 bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white py-2.5 px-4 rounded-full shadow-pill flex items-center gap-2 cursor-pointer transition-bounce hover:scale-105">
-        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+        class="fixed bottom-4 sm:bottom-6 left-3.5 sm:left-8 z-40 bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white p-2.5 sm:py-2.5 sm:px-4 rounded-full shadow-pill flex items-center gap-2 cursor-pointer transition-bounce hover:scale-105">
+        <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
             <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/>
         </svg>
         <span class="text-xs font-extrabold tracking-wide hidden sm:inline">Chat Admin WA</span>
@@ -1700,7 +1696,7 @@
         onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
         aria-label="Kembali ke atas"
         title="Kembali ke atas"
-        class="hide fixed bottom-6 right-5 sm:right-8 z-40 bg-coral hover:bg-coral-dark text-white p-3 sm:p-3.5 rounded-full shadow-pill flex items-center justify-center cursor-pointer hover:scale-110 active:scale-95 transition-bounce">
+        class="hide fixed bottom-4 sm:bottom-6 right-3.5 sm:right-8 z-40 bg-coral hover:bg-coral-dark text-white p-2.5 sm:p-3.5 rounded-full shadow-pill flex items-center justify-center cursor-pointer hover:scale-110 active:scale-95 transition-bounce">
         <svg class="w-5 h-5 sm:w-5.5 sm:h-5.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
