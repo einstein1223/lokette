@@ -1245,11 +1245,53 @@
             }
         }
 
-        // Inisialisasi awal render Batch PO & periksa URL Admin
+        // Periksa parameter URL ?resi=... atau ?track=... untuk auto-lacak
+        function checkUrlForResi() {
+            const params = new URLSearchParams(window.location.search);
+            const queryResi = params.get('resi') || params.get('track');
+            if (queryResi) {
+                setTimeout(() => {
+                    fillDemo(queryResi);
+                }, 350);
+            }
+        }
+
+        // Inisialisasi awal render Batch PO, URL Admin & URL Resi
         renderBatchPO();
         checkUrlForAdmin();
+        checkUrlForResi();
 
         const mockDatabase = [
+            {
+                resi: 'LKT-WH8821',
+                po: 'PO-LKT/2026/WH-08',
+                nama: 'Anisa Rahmawati',
+                status: 'Barang di Warehouse Lokette',
+                statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
+                step: 2,
+                ket: 'Barang masih di Warehouse Lokette Jakarta. Saat ini barang sedang dalam tahap sortir, quality control (QC), dan proses packing aman sebelum diserahkan ke kurir pengiriman.',
+                logs: [
+                    { time: 'Hari ini, 10:45 WIB', desc: 'Barang berada di Warehouse Lokette Jakarta dalam antrean sortir, QC fisik barang, & persiapan re-packing aman.' },
+                    { time: 'Hari ini, 08:20 WIB', desc: 'Paket kargo koli tiba di Warehouse Lokette Jakarta setelah selesai proses custom clearance.' },
+                    { time: 'Kemarin, 21:15 WIB', desc: 'Paket kargo tiba di Bandara Soekarno-Hatta & selesai proses pemeriksaan bea cukai.' },
+                    { time: '06 Nov 2026, 15:00 WIB', desc: 'Barang PO dibelanjakan & diberangkatkan dari warehouse luar negeri menuju Indonesia.' }
+                ]
+            },
+            {
+                resi: 'LKT-WH2026',
+                po: 'PO-LKT/2026/WH-08',
+                nama: 'Anisa Rahmawati',
+                status: 'Barang di Warehouse Lokette',
+                statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
+                step: 2,
+                ket: 'Barang masih di Warehouse Lokette Jakarta. Saat ini barang sedang dalam tahap sortir, quality control (QC), dan proses packing aman sebelum diserahkan ke kurir pengiriman.',
+                logs: [
+                    { time: 'Hari ini, 10:45 WIB', desc: 'Barang berada di Warehouse Lokette Jakarta dalam antrean sortir, QC fisik barang, & persiapan re-packing aman.' },
+                    { time: 'Hari ini, 08:20 WIB', desc: 'Paket kargo koli tiba di Warehouse Lokette Jakarta setelah selesai proses custom clearance.' },
+                    { time: 'Kemarin, 21:15 WIB', desc: 'Paket kargo tiba di Bandara Soekarno-Hatta & selesai proses pemeriksaan bea cukai.' },
+                    { time: '06 Nov 2026, 15:00 WIB', desc: 'Barang PO dibelanjakan & diberangkatkan dari warehouse luar negeri menuju Indonesia.' }
+                ]
+            },
             {
                 resi: 'LKT-882910',
                 po: 'Paket Pelanggan Jastip',
@@ -1651,17 +1693,26 @@
 
             const cleanResi = rawQuery.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
 
-            // Cek apakah cocok dengan data demo/mock lokal
+            // Cek apakah cocok dengan data resi / mock lokal
             const localMatch = mockDatabase.find(item => 
                 item.resi.toLowerCase() === rawQuery.toLowerCase() ||
+                item.resi.replace(/[^A-Za-z0-9]/g, '').toUpperCase() === cleanResi ||
                 item.nama.toLowerCase().includes(rawQuery.toLowerCase()) ||
                 item.po.toLowerCase().includes(rawQuery.toLowerCase())
             );
 
-            // Jika pencarian nama orang atau batch PO dummy tertentu
-            if ((rawQuery.includes(' ') || rawQuery.toLowerCase().startsWith('po-')) && localMatch) {
+            // Jika cocok dengan data resi mock atau nama, tampilkan langsung secara instan
+            if (localMatch && (
+                localMatch.resi.toLowerCase() === rawQuery.toLowerCase() ||
+                localMatch.resi.replace(/[^A-Za-z0-9]/g, '').toUpperCase() === cleanResi ||
+                rawQuery.includes(' ') || 
+                rawQuery.toLowerCase().startsWith('po-') ||
+                rawQuery.toLowerCase().includes('warehouse') ||
+                rawQuery.toLowerCase().includes('wh') ||
+                rawQuery.toLowerCase().includes('anisa')
+            )) {
                 renderResult(localMatch);
-                showToast(`Data demo ditemukan untuk ${localMatch.nama}!`);
+                showToast(`Data resi ${localMatch.resi} (${localMatch.status}) berhasil ditemukan!`);
                 return;
             }
 
