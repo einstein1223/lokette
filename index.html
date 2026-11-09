@@ -274,7 +274,7 @@
         <header class="relative z-30 hero-anim-1">
             <nav class="bg-white/95 backdrop-blur-md rounded-full px-4 sm:px-8 py-2.5 sm:py-3.5 shadow-soft flex items-center justify-between border border-white">
                 <!-- Logo Lokette -->
-                <a href="#top-home" class="inline-flex items-center select-none group">
+                <a href="#top-home" onclick="handleLogoClick(event)" class="inline-flex items-center select-none group" title="Lokette">
                     <img src="logo_lokette.png" alt="Logo Lokette" class="h-7 sm:h-9 md:h-10 w-auto object-contain group-hover:scale-105 transition-transform">
                 </a>
 
@@ -285,11 +285,8 @@
                     <a href="#official-links" class="hover:text-coral transition-colors">Link Resmi</a>
                     <a href="#faq-section" class="hover:text-coral transition-colors">FAQ</a>
                     <a href="#contact-admin" class="hover:text-coral transition-colors">Contact Admin</a>
-                    <button onclick="openPoModal()" class="bg-cream-input hover:bg-coral hover:text-white text-coral px-3.5 py-2 rounded-full transition-bounce flex items-center gap-1.5 text-xs font-extrabold cursor-pointer">
+                    <button onclick="openPoModal()" class="bg-cream-input hover:bg-coral hover:text-white text-coral px-4 py-2 rounded-full transition-bounce flex items-center gap-1.5 text-xs font-extrabold cursor-pointer">
                         <span>Daftar Batch PO</span>
-                    </button>
-                    <button onclick="handleAdminNavbarClick()" id="navbarAdminBtn" class="bg-coral text-white hover:bg-coral-dark px-3.5 py-2 rounded-full transition-bounce flex items-center gap-1.5 text-xs font-extrabold shadow-2xs cursor-pointer">
-                        <span>🔐 Admin PO</span>
                     </button>
                 </div>
 
@@ -335,11 +332,6 @@
                             <span>💬</span> Hubungi Admin WhatsApp
                         </a>
                     </li>
-                    <li class="pt-1 border-t border-cream-field/80">
-                        <button onclick="toggleMobileMenu(); handleAdminNavbarClick();" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-coral/10 hover:bg-coral hover:text-white text-coral font-extrabold transition-colors cursor-pointer text-left">
-                            <span>🔐</span> <span id="mobileAdminLabel">Kelola Batch PO (Admin)</span>
-                        </button>
-                    </li>
                 </ul>
             </div>
         </header>
@@ -364,24 +356,18 @@
                     Pantau pengiriman barangmu, cek lokasi, dan akses semua link resmi dari Lokette dalam satu tempat.
                 </p>
 
-                <!-- Tombol Kapsul Utama: "Daftar Batch PO" & "Kelola PO (Admin)" -->
-                <div class="mt-3 sm:mt-5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+                <!-- Tombol Kapsul Utama: "Daftar Batch PO" -->
+                <div class="mt-3 sm:mt-5 flex items-center justify-center">
                     <button 
                         type="button"
                         onclick="openPoModal()" 
-                        class="bg-coral hover:bg-coral-dark active:scale-95 text-white font-extrabold text-[13px] sm:text-[15px] px-5 sm:px-7 py-2 sm:py-2.5 rounded-full shadow-pill inline-flex items-center gap-2 transition-bounce hover:-translate-y-0.5 cursor-pointer">
+                        class="bg-coral hover:bg-coral-dark active:scale-95 text-white font-extrabold text-[13.5px] sm:text-[15.5px] px-6 sm:px-9 py-2.5 sm:py-3 rounded-full shadow-pill inline-flex items-center gap-2 transition-bounce hover:-translate-y-0.5 cursor-pointer">
                         <span>Daftar Batch PO</span>
-                        <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <!-- Ikon Daftar PO -->
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                         </svg>
-                    </button>
-                    <button 
-                        type="button"
-                        onclick="handleAdminNavbarClick()" 
-                        id="heroAdminBtn"
-                        class="bg-white hover:bg-cream-input active:scale-95 text-coral font-extrabold text-[13px] sm:text-[15px] px-4 sm:px-6 py-2 sm:py-2.5 rounded-full shadow-soft border border-coral/30 inline-flex items-center gap-1.5 transition-bounce hover:-translate-y-0.5 cursor-pointer">
-                        <span>🔐 Kelola PO (Admin)</span>
                     </button>
                 </div>
             </section>
@@ -801,6 +787,17 @@
                         <span>↑ Kembali ke Atas (Lacak Resi)</span>
                     </a>
                 </div>
+                <div class="pt-2 text-center text-[11px] font-medium text-charcoal/40 flex items-center justify-center gap-1.5 select-none">
+                    <span>© 2026 Lokette. All rights reserved.</span>
+                    <button 
+                        type="button" 
+                        onclick="openAdminLoginModal()" 
+                        title="Admin Area" 
+                        aria-label="Admin Area" 
+                        class="text-charcoal/20 hover:text-coral transition-colors cursor-pointer p-0.5 text-xs inline-flex items-center">
+                        🔒
+                    </button>
+                </div>
             </footer>
 
         </div>
@@ -987,6 +984,55 @@
             }
         }
 
+        // Akses Tersembunyi: Klik 3x Logo Lokette
+        let logoClickCount = 0;
+        let logoClickTimer = null;
+        function handleLogoClick(e) {
+            logoClickCount++;
+            if (logoClickCount === 1) {
+                logoClickTimer = setTimeout(() => {
+                    logoClickCount = 0;
+                }, 1200);
+            } else if (logoClickCount >= 3) {
+                clearTimeout(logoClickTimer);
+                logoClickCount = 0;
+                e.preventDefault();
+                if (isAdminLoggedIn()) {
+                    openAddPoModal();
+                } else {
+                    openAdminLoginModal();
+                }
+            }
+        }
+
+        // Akses Tersembunyi: Shortcut Keyboard Ctrl + Shift + A
+        window.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                e.preventDefault();
+                if (isAdminLoggedIn()) {
+                    openAddPoModal();
+                } else {
+                    openAdminLoginModal();
+                }
+            }
+        });
+
+        // Akses Tersembunyi: URL Hash #admin atau parameter ?admin
+        function checkUrlForAdmin() {
+            const hash = (window.location.hash || '').toLowerCase();
+            const search = (window.location.search || '').toLowerCase();
+            if (hash === '#admin' || search.includes('admin') || search.includes('login')) {
+                setTimeout(() => {
+                    if (isAdminLoggedIn()) {
+                        openAddPoModal();
+                    } else {
+                        openAdminLoginModal();
+                    }
+                }, 350);
+            }
+        }
+        window.addEventListener('hashchange', checkUrlForAdmin);
+
         function handleAdminNavbarClick() {
             if (isAdminLoggedIn()) {
                 openAddPoModal();
@@ -1112,38 +1158,27 @@
             const poList = getStoredPO();
             const isAuth = isAdminLoggedIn();
             
-            // 1. Render Tombol Aksi Admin di Header
-            // Sync status ke tombol Admin di Navbar & Hero
-            const navAdminBtn = document.getElementById('navbarAdminBtn');
-            const heroAdminBtn = document.getElementById('heroAdminBtn');
-            const mobileAdminLabel = document.getElementById('mobileAdminLabel');
-            if (navAdminBtn) {
-                navAdminBtn.innerHTML = isAuth ? '<span>✨ + Tambah PO</span>' : '<span>🔐 Admin PO</span>';
-            }
-            if (heroAdminBtn) {
-                heroAdminBtn.innerHTML = isAuth ? '<span>✨ + Tambah Batch PO</span>' : '<span>🔐 Kelola PO (Admin)</span>';
-            }
-            if (mobileAdminLabel) {
-                mobileAdminLabel.textContent = isAuth ? '+ Tambah Batch PO (Admin Aktif)' : 'Kelola Batch PO (Admin)';
-            }
-
+            // 1. Render Tombol Aksi Admin di Header (Disembunyikan jika belum login)
             const actionsContainer = document.getElementById('adminPoActions');
             if (actionsContainer) {
                 if (isAuth) {
                     actionsContainer.innerHTML = `
-                        <button onclick="openAddPoModal()" class="bg-coral hover:bg-coral-dark text-white text-xs font-extrabold px-3 sm:px-4 py-1.5 rounded-full shadow-2xs transition-bounce flex items-center gap-1 cursor-pointer">
-                            <span>+ Tambah PO</span>
-                        </button>
-                        <button onclick="handleAdminLogout()" title="Keluar Mode Admin" class="text-[11px] font-bold text-charcoal/60 hover:text-red-500 px-2 py-1 cursor-pointer">
-                            Keluar
-                        </button>
+                        <div class="inline-flex items-center gap-1.5 bg-coral/10 px-2.5 py-1 rounded-full border border-coral/25 animate-[pulseHighlight_0.25s_ease-out]">
+                            <span class="text-[10.5px] font-extrabold text-coral flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Admin
+                            </span>
+                            <button onclick="openAddPoModal()" class="bg-coral hover:bg-coral-dark text-white text-xs font-extrabold px-2.5 py-0.5 rounded-full shadow-2xs transition-bounce flex items-center gap-1 cursor-pointer">
+                                <span>+ Tambah PO</span>
+                            </button>
+                            <button onclick="handleAdminLogout()" title="Keluar Mode Admin" class="text-[10px] font-bold text-charcoal/60 hover:text-red-500 px-1 py-0.5 cursor-pointer">
+                                Keluar
+                            </button>
+                        </div>
                     `;
                 } else {
-                    actionsContainer.innerHTML = `
-                        <button onclick="openAdminLoginModal()" class="text-[11px] sm:text-xs font-bold text-coral/80 hover:text-coral bg-cream-input hover:bg-cream-field px-3 py-1 rounded-full transition-colors flex items-center gap-1 cursor-pointer">
-                            <span>🔐 Login Admin</span>
-                        </button>
-                    `;
+                    // Ketika belum login: SEMBUNYIKAN SEPENUHNYA!
+                    actionsContainer.innerHTML = '';
                 }
             }
 
@@ -1213,6 +1248,10 @@
                 }).join('');
             }
         }
+
+        // Inisialisasi awal render Batch PO & periksa URL Admin
+        renderBatchPO();
+        checkUrlForAdmin();
 
         const mockDatabase = [
             {
