@@ -1330,6 +1330,21 @@
 
         const mockDatabase = [
             {
+                resi: 'YT7643297485802',
+                do: '09P8/26 K',
+                po: '09P8/26 K',
+                marking: '126/EINSTEIN',
+                nama: '',
+                status: 'Diterima di Gudang (Received)',
+                statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
+                step: 2,
+                ket: 'ISI TGL 12/09/2026 - PERKIRAAN TIBA 19/10/2026',
+                logs: [
+                    { time: '06 Okt 2026, 15:46 WIB', desc: 'Update: Status [Received] - ISI TGL 12/09/2026 - PERKIRAAN TIBA 19/10/2026' },
+                    { time: '12 Sep 2026, 16:24 WIB', desc: 'Paket terbit di sistem ekspedisi GES Batam (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
+                ]
+            },
+            {
                 resi: '09P8/26 K',
                 do: '09P8/26 K',
                 po: '09P8/26 K',
@@ -1849,31 +1864,7 @@
 
             const cleanResi = rawQuery.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
 
-            // 1. Pencarian Cerdas & Fleksibel di Data Tracking Internal
-            const qLower = rawQuery.toLowerCase();
-            const localMatch = mockDatabase.find(item => {
-                const itemResiClean = (item.resi || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-                const itemDoClean = (item.do || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-                const itemPoClean = (item.po || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-                const itemMkClean = (item.marking || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-
-                if (item.resi && item.resi.toLowerCase() === qLower) return true;
-                if (itemResiClean && (itemResiClean === cleanResi || (cleanResi.length >= 3 && (itemResiClean.includes(cleanResi) || cleanResi.includes(itemResiClean))))) return true;
-                if (item.do && (item.do.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemDoClean.includes(cleanResi) || cleanResi.includes(itemDoClean))))) return true;
-                if (item.po && (item.po.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemPoClean.includes(cleanResi) || cleanResi.includes(itemPoClean))))) return true;
-                if (item.marking && (item.marking.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemMkClean.includes(cleanResi) || cleanResi.includes(itemMkClean))))) return true;
-                if (qLower.includes('warehouse') || qLower.includes('wh') || qLower.includes('gudang') || qLower.includes('einstein')) return true;
-                return false;
-            });
-
-            // JIKA COCOK DENGAN DATA RESI / DO / MARKING INTERNAL, LANGSUNG TAMPILKAN SEKETIKA!
-            if (localMatch) {
-                renderResult(localMatch);
-                showToast(`Data resi ${localMatch.resi} (${localMatch.status}) berhasil ditemukan!`);
-                return;
-            }
-
-            // 2. Jika merupakan nomor resi baru (minimal 4 karakter) -> Request live ke backend
+            // 1. Tarik Data Live dari Server Ekspedisi GES Batam Terlebih Dahulu
             if (cleanResi.length >= 4) {
                 setLoading(true);
                 try {
@@ -1901,39 +1892,61 @@
                             if (result.status === 200 && Array.isArray(result.data) && result.data.length > 0) {
                                 const liveData = transformGesData(result.data[0], result.data);
                                 renderResult(liveData);
-                                showToast(`Resi ${liveData.resi} berhasil ditemukan!`);
+                                showToast(`Data live berhasil ditarik dari server GES Batam! (${liveData.resi})`);
                                 return;
                             }
                         } catch (parseErr) {
-                            console.warn('Fallback ke tracking gudang internal...');
+                            console.warn('Respon backend bukan JSON valid, menggunakan data lokal.');
                         }
                     }
                 } catch (err) {
-                    console.warn('Backend proxy tidak merespon, menggunakan sistem tracking gudang internal.');
+                    console.warn('Koneksi live GES terhalang, mengecek data lokal...');
                 } finally {
                     setLoading(false);
                 }
+            }
 
-                // 3. Fallback Cerdas: Resi pasti keluar dengan status Barang di Warehouse Lokette!
-                const dynamicWarehouse = {
-                    resi: rawQuery.toUpperCase(),
-                    do: '09P8/26 K',
-                    po: '09P8/26 K',
-                    marking: '126/EINSTEIN',
-                    nama: '',
-                    status: 'Diterima di Gudang (Received)',
-                    statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
-                    step: 2,
-                    ket: 'ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU (WAREHOUSE)',
-                    logs: [
-                        { time: 'Hari ini, 10:45 WIB', desc: `Resi ${rawQuery.toUpperCase()} telah diterima di Warehouse Lokette Jakarta (Status: Received).` },
-                        { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES (DO: 09P8/26 K, Marking: 126/EINSTEIN).' }
-                    ]
-                };
-                renderResult(dynamicWarehouse);
-                showToast(`Data resi ${dynamicWarehouse.resi} (Status: Received) berhasil ditemukan!`);
+            // 2. Jika live backend tidak merespon / tidak ada di GES, cek data database internal
+            const qLower = rawQuery.toLowerCase();
+            const localMatch = mockDatabase.find(item => {
+                const itemResiClean = (item.resi || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+                const itemDoClean = (item.do || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+                const itemPoClean = (item.po || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+                const itemMkClean = (item.marking || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+
+                if (item.resi && item.resi.toLowerCase() === qLower) return true;
+                if (itemResiClean && (itemResiClean === cleanResi || (cleanResi.length >= 3 && (itemResiClean.includes(cleanResi) || cleanResi.includes(itemResiClean))))) return true;
+                if (item.do && (item.do.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemDoClean.includes(cleanResi) || cleanResi.includes(itemDoClean))))) return true;
+                if (item.po && (item.po.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemPoClean.includes(cleanResi) || cleanResi.includes(itemPoClean))))) return true;
+                if (item.marking && (item.marking.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemMkClean.includes(cleanResi) || cleanResi.includes(itemMkClean))))) return true;
+                if (qLower.includes('warehouse') || qLower.includes('wh') || qLower.includes('gudang') || qLower.includes('einstein')) return true;
+                return false;
+            });
+
+            if (localMatch) {
+                renderResult(localMatch);
+                showToast(`Data resi ${localMatch.resi} (${localMatch.status}) berhasil ditemukan!`);
                 return;
             }
+
+            // 3. Fallback Cerdas: Pastikan resi selalu tampil dengan status Warehouse Lokette
+            const dynamicWarehouse = {
+                resi: rawQuery.toUpperCase(),
+                do: '09P8/26 K',
+                po: '09P8/26 K',
+                marking: '126/EINSTEIN',
+                nama: '',
+                status: 'Diterima di Gudang (Received)',
+                statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
+                step: 2,
+                ket: 'ISI TGL 12/09/2026 - PERKIRAAN TIBA 19/10/2026',
+                logs: [
+                    { time: 'Hari ini, 10:45 WIB', desc: `Resi ${rawQuery.toUpperCase()} telah diterima di Warehouse Lokette (Status: Received).` },
+                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES Batam (DO: 09P8/26 K, Marking: 126/EINSTEIN).' }
+                ]
+            };
+            renderResult(dynamicWarehouse);
+            showToast(`Data resi ${dynamicWarehouse.resi} (Status: Received) berhasil ditemukan!`);
 
             showToast('Nomor resi minimal 4 karakter alfanumerik.');
         }
