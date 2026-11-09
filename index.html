@@ -269,7 +269,7 @@
     <!-- BAGIAN 1: FULL-SCREEN FIRST FOLD (100VH LANDING VIEW)                 -->
     <!-- Saat pertama dibuka, tampil penuh 1 layar. Scroll untuk ke bawah.     -->
     <!-- ===================================================================== -->
-    <div id="top-home" class="relative z-10 min-h-screen flex flex-col justify-between w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-8 pt-3 sm:pt-6 pb-4 sm:pb-5">
+    <div id="top-home" class="relative z-10 min-h-0 sm:min-h-screen flex flex-col justify-start sm:justify-between w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-8 pt-2.5 sm:pt-6 pb-3 sm:pb-5 gap-3.5 sm:gap-0">
         
         <header class="relative z-30 hero-anim-1">
             <nav class="bg-white/95 backdrop-blur-md rounded-full px-4 sm:px-8 py-2.5 sm:py-3.5 shadow-soft flex items-center justify-between border border-white">
@@ -337,12 +337,12 @@
         </header>
 
         <!-- TENGAH LAYAR PERTAMA: HERO + KARTU LACAK RESI UTAMA -->
-        <div class="my-auto py-4 sm:py-6 w-full max-w-2xl mx-auto">
+        <div class="my-0 sm:my-auto py-1 sm:py-6 w-full max-w-2xl mx-auto">
             
             <!-- 2. HERO SECTION -->
             <section class="relative md:text-center hero-anim-2">
                 <!-- Garis pendek kuning di atas judul -->
-                <div class="w-10 sm:w-12 h-1.5 bg-sunny rounded-full mb-2.5 md:mx-auto"></div>
+                <div class="w-10 sm:w-12 h-1.5 bg-sunny rounded-full mb-1.5 sm:mb-2.5 md:mx-auto"></div>
 
                 <!-- Judul Utama -->
                 <div class="relative inline-block">
@@ -352,12 +352,12 @@
                 </div>
 
                 <!-- Subjudul -->
-                <p class="mt-2 text-[13px] sm:text-[15.5px] font-semibold text-coral/90 leading-relaxed max-w-xl md:mx-auto">
+                <p class="mt-1.5 sm:mt-2 text-xs xs:text-[13px] sm:text-[15.5px] font-semibold text-coral/90 leading-relaxed max-w-xl md:mx-auto">
                     Pantau pengiriman barangmu, cek lokasi, dan akses semua link resmi dari Lokette dalam satu tempat.
                 </p>
 
                 <!-- Tombol Kapsul Utama: "Daftar Batch PO" -->
-                <div class="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-3">
+                <div class="mt-3 sm:mt-5 flex flex-wrap items-center justify-center gap-3">
                     <button 
                         type="button"
                         onclick="openPoModal()" 
@@ -373,7 +373,7 @@
             </section>
 
             <!-- 3. KARTU UTAMA: LACAK RESI & CEK STATUS PO -->
-            <section id="cek-status" class="mt-4 sm:mt-6 hero-anim-3">
+            <section id="cek-status" class="mt-3.5 sm:mt-6 hero-anim-3">
                 <div class="bg-cream-card/95 backdrop-blur-xs rounded-[24px] sm:rounded-[28px] p-3.5 sm:p-6 shadow-card border border-white">
                     
                     <!-- Header Mini Lacak Resi -->
@@ -545,7 +545,7 @@
     <!-- ===================================================================== -->
     <!-- BAGIAN 2: KONTEN BAWAH (MUNCUL DENGAN ANIMASI SAAT DI-SCROLL)         -->
     <!-- ===================================================================== -->
-    <div id="explore-more" class="relative z-10 w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-8 pt-6 pb-12">
+    <div id="explore-more" class="relative z-10 w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-12">
         <div class="max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto space-y-10 sm:space-y-12">
 
             <!-- 3.5 JADWAL & KUOTA BATCH PO AKTIF -->
@@ -799,7 +799,7 @@
                             </svg>
                         </button>
                         <div id="faqContent2" class="hidden px-4 sm:px-5 pb-4 text-xs font-semibold text-charcoal/75 leading-relaxed border-t border-cream-field pt-2.5">
-                            Pastikan no resi sesuai dengan yang diberikan admin.  <strong></strong>
+                            Pastikan no resi sesuai dengan yang diberikan admin. Jika belum muncul, silakan langsung tanyakan ke Admin.
                         </div>
                     </div>
 
@@ -812,7 +812,7 @@
                             </svg>
                         </button>
                         <div id="faqContent3" class="hidden px-4 sm:px-5 pb-4 text-xs font-semibold text-charcoal/75 leading-relaxed border-t border-cream-field pt-2.5">
-                            Bisa banget! Kamu cukup kirim foto barang yang diinginkan ke <strong>Admin Nicc</strong> atau <strong>Admin Lokette</strong> via WhatsApp, Tetapi ongkirnya akan berbeda. <em>
+                            Bisa banget! Kamu cukup kirim foto barang yang diinginkan ke <strong>Admin Nicc</strong> atau <strong>Admin Lokette</strong> via WhatsApp, tetapi ongkirnya akan berbeda.
                         </div>
                     </div>
                 </div>
