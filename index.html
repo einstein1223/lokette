@@ -1686,7 +1686,6 @@
             // Baris 3: Marking (Hilangkan Nama pribadi, samakan dengan sistem GES Batam)
             const rowMarking = document.getElementById('rowMarking');
             const lblMarking = document.getElementById('lblMarking');
-            const valNama = document.getElementById('valNama');
             const displayMarking = data.marking || data.nama || '';
             if (displayMarking) {
                 if (rowMarking) rowMarking.classList.remove('hidden');
@@ -1864,7 +1863,7 @@
 
             const cleanResi = rawQuery.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
 
-            // 1. Tarik Data Live dari Server Ekspedisi GES Batam Terlebih Dahulu
+            // 1. Tarik Data Live dari Server Ekspedisi GES Batam Terlebih Dahulu (dengan batas timeout 6 detik agar tidak pernah macet)
             if (cleanResi.length >= 4) {
                 setLoading(true);
                 try {
@@ -1875,14 +1874,21 @@
                         targetUrl = `api/track?resi=${encodeURIComponent(cleanResi)}`;
                     }
 
+                    const abortCtrl = new AbortController();
+                    const timeoutId = setTimeout(() => abortCtrl.abort(), 6000);
+
                     let response = null;
                     try {
-                        response = await fetch(targetUrl);
+                        response = await fetch(targetUrl, { signal: abortCtrl.signal });
                     } catch (fetchErr) {
                         const fallbackUrl = targetUrl.includes('api/track')
                             ? `track.php?resi=${encodeURIComponent(cleanResi)}`
                             : `/api/track?resi=${encodeURIComponent(cleanResi)}`;
-                        response = await fetch(fallbackUrl);
+                        try {
+                            response = await fetch(fallbackUrl, { signal: abortCtrl.signal });
+                        } catch (_) {}
+                    } finally {
+                        clearTimeout(timeoutId);
                     }
 
                     if (response && response.ok) {
