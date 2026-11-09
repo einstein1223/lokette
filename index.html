@@ -1040,24 +1040,29 @@
             }
         }
 
-        // Akses Tersembunyi: Klik 3x Logo Lokette
+        // Akses Tersembunyi: Klik 3x Logo Lokette (Untuk Menambah PO / Login Admin)
         let logoClickCount = 0;
         let logoClickTimer = null;
         function handleLogoClick(e) {
+            clearTimeout(logoClickTimer);
             logoClickCount++;
-            if (logoClickCount === 1) {
-                logoClickTimer = setTimeout(() => {
-                    logoClickCount = 0;
-                }, 1200);
-            } else if (logoClickCount >= 3) {
+            if (logoClickCount >= 3) {
                 clearTimeout(logoClickTimer);
                 logoClickCount = 0;
-                e.preventDefault();
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
                 if (isAdminLoggedIn()) {
                     openAddPoModal();
                 } else {
+                    window._autoOpenAddPoAfterLogin = true;
                     openAdminLoginModal();
                 }
+            } else {
+                logoClickTimer = setTimeout(() => {
+                    logoClickCount = 0;
+                }, 1800);
             }
         }
 
@@ -1131,7 +1136,11 @@
                 localStorage.setItem('lokette_admin_auth', 'true');
                 closeAdminLoginModal();
                 renderBatchPO();
-                showToast('Login Admin berhasil! Kamu bisa menambah & mengelola batch PO.');
+                showToast('Login Admin berhasil!');
+                if (window._autoOpenAddPoAfterLogin) {
+                    window._autoOpenAddPoAfterLogin = false;
+                    setTimeout(() => openAddPoModal(), 250);
+                }
             } else {
                 showToast('PIN Admin salah. Coba: admin123 atau lokette123');
             }
