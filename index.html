@@ -487,15 +487,15 @@
                             </div>
                         </div>
 
-                        <!-- Baris 2: No. PO -->
+                        <!-- Baris 2: No. DO -->
                         <div class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
-                            <span class="font-extrabold text-charcoal text-[13.5px] sm:text-[15px]">No. PO</span>
+                            <span id="lblPO" class="font-extrabold text-charcoal text-[13.5px] sm:text-[15px]">No. DO</span>
                             <span id="valPO" class="text-sm sm:text-[15px] font-bold text-charcoal/80 mt-0.5 sm:mt-0 break-all sm:text-right"></span>
                         </div>
 
-                        <!-- Baris 3: Nama -->
-                        <div class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
-                            <span class="font-extrabold text-charcoal text-[13.5px] sm:text-[15px]">Nama</span>
+                        <!-- Baris 3: Marking (Format Resmi GES Batam, Tanpa Nama) -->
+                        <div id="rowMarking" class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
+                            <span id="lblMarking" class="font-extrabold text-charcoal text-[13.5px] sm:text-[15px]">Marking</span>
                             <span id="valNama" class="text-sm sm:text-[15px] font-bold text-charcoal/80 mt-0.5 sm:mt-0 break-words sm:text-right"></span>
                         </div>
 
@@ -1263,75 +1263,79 @@
 
         const mockDatabase = [
             {
-                resi: 'LKT-WH8821',
-                po: 'PO-LKT/2026/WH-08',
-                nama: 'Anisa Rahmawati',
-                status: 'Barang di Warehouse Lokette',
+                resi: 'LKT-WH2026',
+                do: '09P8/26 K',
+                po: '09P8/26 K',
+                marking: '126/EINSTEIN',
+                nama: '',
+                status: 'Diterima di Gudang (Received)',
                 statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
                 step: 2,
-                ket: 'Barang masih di Warehouse Lokette Jakarta. Saat ini barang sedang dalam tahap sortir, quality control (QC), dan proses packing aman sebelum diserahkan ke kurir pengiriman.',
+                ket: 'ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU (WAREHOUSE)',
                 logs: [
-                    { time: 'Hari ini, 10:45 WIB', desc: 'Barang berada di Warehouse Lokette Jakarta dalam antrean sortir, QC fisik barang, & persiapan re-packing aman.' },
-                    { time: 'Hari ini, 08:20 WIB', desc: 'Paket kargo koli tiba di Warehouse Lokette Jakarta setelah selesai proses custom clearance.' },
-                    { time: 'Kemarin, 21:15 WIB', desc: 'Paket kargo tiba di Bandara Soekarno-Hatta & selesai proses pemeriksaan bea cukai.' },
-                    { time: '06 Nov 2026, 15:00 WIB', desc: 'Barang PO dibelanjakan & diberangkatkan dari warehouse luar negeri menuju Indonesia.' }
+                    { time: 'Hari ini, 10:45 WIB', desc: 'Update: Status [Received] - ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU' },
+                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
                 ]
             },
             {
-                resi: 'LKT-WH2026',
-                po: 'PO-LKT/2026/WH-08',
-                nama: 'Anisa Rahmawati',
-                status: 'Barang di Warehouse Lokette',
+                resi: 'LKT-WH8821',
+                do: '09P8/26 K',
+                po: '09P8/26 K',
+                marking: '126/EINSTEIN',
+                nama: '',
+                status: 'Diterima di Gudang (Received)',
                 statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
                 step: 2,
-                ket: 'Barang masih di Warehouse Lokette Jakarta. Saat ini barang sedang dalam tahap sortir, quality control (QC), dan proses packing aman sebelum diserahkan ke kurir pengiriman.',
+                ket: 'ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU (WAREHOUSE)',
                 logs: [
-                    { time: 'Hari ini, 10:45 WIB', desc: 'Barang berada di Warehouse Lokette Jakarta dalam antrean sortir, QC fisik barang, & persiapan re-packing aman.' },
-                    { time: 'Hari ini, 08:20 WIB', desc: 'Paket kargo koli tiba di Warehouse Lokette Jakarta setelah selesai proses custom clearance.' },
-                    { time: 'Kemarin, 21:15 WIB', desc: 'Paket kargo tiba di Bandara Soekarno-Hatta & selesai proses pemeriksaan bea cukai.' },
-                    { time: '06 Nov 2026, 15:00 WIB', desc: 'Barang PO dibelanjakan & diberangkatkan dari warehouse luar negeri menuju Indonesia.' }
+                    { time: 'Hari ini, 10:45 WIB', desc: 'Update: Status [Received] - ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU' },
+                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
                 ]
             },
             {
                 resi: 'LKT-882910',
-                po: 'Paket Pelanggan Jastip',
-                nama: 'Nadia Putri',
+                do: '08P5/26 K',
+                po: '08P5/26 K',
+                marking: '126/LOKETTE',
+                nama: '',
                 status: 'Dalam Pengiriman (Shipping)',
-                statusColor: 'bg-sunny/40 text-[#9B7200]',
+                statusColor: 'bg-blue-100 text-blue-700',
                 step: 3,
-                ket: 'Paket sedang dalam proses shipping menuju alamat tujuan (Jakarta Selatan).',
+                ket: 'Paket dalam proses shipping menuju alamat tujuan.',
                 logs: [
-                    { time: 'Hari ini, 09:40 WIB', desc: 'Kurir sedang membawa paket menuju alamat Nadia Putri (Jakarta Selatan).' },
+                    { time: 'Hari ini, 09:40 WIB', desc: 'Kurir sedang membawa paket menuju alamat penerima.' },
                     { time: 'Kemarin, 19:15 WIB', desc: 'Paket telah keluar dari Hub Sorting Jakarta dan diserahkan ke tim Shipping.' },
-                    { time: '03 Nov 2026, 14:20 WIB', desc: 'Tiba di Warehouse Lokette Jakarta, lolos QC & selesai re-packing bubble wrap.' }
+                    { time: '03 Nov 2026, 14:20 WIB', desc: 'Paket tiba di Warehouse Lokette Jakarta, lolos QC & selesai re-packing.' }
                 ]
             },
             {
                 resi: 'JNT-992018',
-                po: 'Order Regular J&T',
-                nama: 'Budi Santoso',
-                status: 'Tiba di Warehouse Lokette',
-                statusColor: 'bg-blue-100 text-blue-700',
+                do: '07P2/26 K',
+                po: '07P2/26 K',
+                marking: '126/EINSTEIN',
+                nama: '',
+                status: 'Diterima di Gudang (Received)',
+                statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
                 step: 2,
-                ket: 'Sedang proses sortir & packing aman menggunakan bubble wrap berlapis.',
+                ket: 'Sedang proses sortir & packing aman di Warehouse Lokette.',
                 logs: [
                     { time: 'Hari ini, 11:05 WIB', desc: 'Paket tiba di Gudang Lokette Jakarta & sedang proses penimbangan/packing.' },
-                    { time: '03 Nov 2026, 22:30 WIB', desc: 'Koli bagasi tiba di Bandara Soekarno-Hatta (Clearance selesai).' },
-                    { time: '01 Nov 2026, 10:00 WIB', desc: 'Pesanan PO dibelanjakan langsung di Seoul & siap dikirim ke Indonesia.' }
+                    { time: '03 Nov 2026, 22:30 WIB', desc: 'Koli bagasi tiba di Bandara Soekarno-Hatta (Clearance selesai).' }
                 ]
             },
             {
                 resi: 'SICEPAT-7712',
-                po: 'Order Ekspedisi SiCepat',
-                nama: 'Rina Amelia',
-                status: 'Selesai / Diterima',
-                statusColor: 'bg-green-100 text-green-700',
+                do: '06P1/26 K',
+                po: '06P1/26 K',
+                marking: '126/EINSTEIN',
+                nama: '',
+                status: 'Terkirim / Selesai (Delivered)',
+                statusColor: 'bg-emerald-100 text-emerald-800',
                 step: 4,
-                ket: 'Paket telah diterima langsung oleh Rina Amelia pada 4 Nov 2026.',
+                ket: 'Paket telah selesai diterima.',
                 logs: [
-                    { time: '04 Nov 2026, 16:45 WIB', desc: 'Paket telah diterima oleh [Rina Amelia - Yang Bersangkutan]. Terima kasih!' },
-                    { time: '04 Nov 2026, 08:30 WIB', desc: 'Paket dibawa oleh kurir SiCepat (SIGESIT) menuju alamat Bandung.' },
-                    { time: '02 Nov 2026, 18:00 WIB', desc: 'Nomor resi diterbitkan oleh Warehouse Lokette & diserahkan ke ekspedisi.' }
+                    { time: '04 Nov 2026, 16:45 WIB', desc: 'Paket telah berhasil diterima. Terima kasih!' },
+                    { time: '04 Nov 2026, 08:30 WIB', desc: 'Paket dibawa oleh kurir menuju alamat tujuan.' }
                 ]
             }
         ];
@@ -1530,8 +1534,27 @@
             });
 
             valResi.textContent = data.resi;
-            valPO.textContent = data.po;
-            valNama.textContent = data.nama;
+
+            // Baris 2: Label & Nilai No. DO / No. PO
+            const lblPO = document.getElementById('lblPO');
+            if (lblPO) {
+                lblPO.textContent = (data.do || (data.po && data.po.includes('DO:'))) ? 'No. DO' : 'No. PO';
+            }
+            valPO.textContent = data.do ? data.do : (data.po || '-');
+
+            // Baris 3: Marking (Hilangkan Nama pribadi, samakan dengan sistem GES Batam)
+            const rowMarking = document.getElementById('rowMarking');
+            const lblMarking = document.getElementById('lblMarking');
+            const valNama = document.getElementById('valNama');
+            const displayMarking = data.marking || data.nama || '';
+            if (displayMarking) {
+                if (rowMarking) rowMarking.classList.remove('hidden');
+                if (lblMarking) lblMarking.textContent = data.marking ? 'Marking' : 'Nama';
+                if (valNama) valNama.textContent = displayMarking;
+            } else {
+                if (rowMarking) rowMarking.classList.add('hidden');
+            }
+
             valStatus.textContent = data.status;
             valStatus.className = `text-xs font-extrabold px-2.5 py-1 rounded-full mt-1 sm:mt-0 w-fit ${data.statusColor}`;
             valKet.textContent = data.ket;
@@ -1656,8 +1679,10 @@
 
             return {
                 resi: primaryItem.no_resi,
+                do: primaryItem.no_do || '',
                 po: primaryItem.no_do ? `DO: ${primaryItem.no_do}` : 'PO Forwarder Batam',
-                nama: primaryItem.marking ? `Marking: ${primaryItem.marking}` : 'Pelanggan Lokette',
+                marking: primaryItem.marking || '',
+                nama: '',
                 status: statusLabel,
                 statusColor: statusColor,
                 step: step,
@@ -1697,19 +1722,18 @@
             const localMatch = mockDatabase.find(item => 
                 item.resi.toLowerCase() === rawQuery.toLowerCase() ||
                 item.resi.replace(/[^A-Za-z0-9]/g, '').toUpperCase() === cleanResi ||
-                item.nama.toLowerCase().includes(rawQuery.toLowerCase()) ||
-                item.po.toLowerCase().includes(rawQuery.toLowerCase())
+                (item.marking && item.marking.toLowerCase().includes(rawQuery.toLowerCase())) ||
+                (item.do && item.do.toLowerCase().includes(rawQuery.toLowerCase())) ||
+                (item.po && item.po.toLowerCase().includes(rawQuery.toLowerCase()))
             );
 
-            // Jika cocok dengan data resi mock atau nama, tampilkan langsung secara instan
+            // Jika cocok dengan data resi mock, tampilkan langsung secara instan
             if (localMatch && (
                 localMatch.resi.toLowerCase() === rawQuery.toLowerCase() ||
                 localMatch.resi.replace(/[^A-Za-z0-9]/g, '').toUpperCase() === cleanResi ||
-                rawQuery.includes(' ') || 
-                rawQuery.toLowerCase().startsWith('po-') ||
                 rawQuery.toLowerCase().includes('warehouse') ||
                 rawQuery.toLowerCase().includes('wh') ||
-                rawQuery.toLowerCase().includes('anisa')
+                rawQuery.toLowerCase().includes('einstein')
             )) {
                 renderResult(localMatch);
                 showToast(`Data resi ${localMatch.resi} (${localMatch.status}) berhasil ditemukan!`);
@@ -1802,13 +1826,16 @@
 
         function copyFullStatus() {
             if (!currentDisplayedData) return;
-            const summary = `Status PO Lokette - ${currentDisplayedData.nama} (${currentDisplayedData.resi}): ${currentDisplayedData.status}. ${currentDisplayedData.ket}`;
+            const idLabel = currentDisplayedData.marking ? `Marking ${currentDisplayedData.marking}` : (currentDisplayedData.nama || currentDisplayedData.resi);
+            const summary = `Status PO Lokette - ${idLabel} (${currentDisplayedData.resi}): ${currentDisplayedData.status}. ${currentDisplayedData.ket}`;
             copyToClipboard(summary, 'Detail status pesanan disalin!');
         }
 
         function askAdminAboutResi() {
             if (!currentDisplayedData) return;
-            const text = encodeURIComponent(`Halo Admin Lokette, saya ingin menanyakan pesanan atas nama *${currentDisplayedData.nama}* dengan No. Resi *${currentDisplayedData.resi}* (${currentDisplayedData.po}).`);
+            const idPart = currentDisplayedData.marking ? `Marking *${currentDisplayedData.marking}*` : (currentDisplayedData.nama ? `atas nama *${currentDisplayedData.nama}*` : '');
+            const doPart = currentDisplayedData.do ? `(DO: ${currentDisplayedData.do})` : (currentDisplayedData.po ? `(${currentDisplayedData.po})` : '');
+            const text = encodeURIComponent(`Halo Admin Lokette, saya ingin menanyakan status paket No. Resi *${currentDisplayedData.resi}* ${doPart} ${idPart}.`);
             window.open(`https://wa.me/6281374300617?text=${text}`, '_blank');
         }
 
