@@ -178,52 +178,14 @@
             pointer-events: none;
         }
 
-        /* Animasi Scroll Reveal: Muncul dari Bawah (Fade Up) */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(32px) scale(0.98);
-            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-        .reveal-on-scroll.is-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Animasi Scroll Reveal: Meluncur dari Kiri (Slide Left) */
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-36px);
-            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-        .reveal-left.is-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Animasi Scroll Reveal: Meluncur dari Kanan (Slide Right) */
-        .reveal-right {
-            opacity: 0;
-            transform: translateX(36px);
-            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-        .reveal-right.is-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Animasi Scroll Reveal: Efek Pop Zoom (Scale In) */
+        /* Tampilan Scroll & Transisi Halus (Konten Selalu Tampil Aman, Tidak Pernah Kosong/Hilang) */
+        .reveal-on-scroll,
+        .reveal-left,
+        .reveal-right,
         .reveal-zoom {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: opacity, transform;
-        }
-        .reveal-zoom.is-visible {
-            opacity: 1;
-            transform: scale(1);
+            opacity: 1 !important;
+            transform: none !important;
+            transition: opacity 0.35s ease-out, transform 0.35s ease-out;
         }
 
         /* Jeda Animasi Berjenjang (Stagger Delays) */
@@ -269,7 +231,7 @@
     <!-- BAGIAN 1: FULL-SCREEN FIRST FOLD (100VH LANDING VIEW)                 -->
     <!-- Saat pertama dibuka, tampil penuh 1 layar. Scroll untuk ke bawah.     -->
     <!-- ===================================================================== -->
-    <div id="top-home" class="relative z-10 min-h-0 sm:min-h-screen flex flex-col justify-start sm:justify-between w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-8 pt-2.5 sm:pt-6 pb-3 sm:pb-5 gap-3.5 sm:gap-0">
+    <div id="top-home" class="relative z-10 min-h-0 flex flex-col justify-start w-full max-w-[540px] md:max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-8 pt-2.5 sm:pt-6 pb-3 sm:pb-5 gap-3 sm:gap-4">
         
         <header class="relative z-30 hero-anim-1">
             <nav class="bg-white/95 backdrop-blur-md rounded-full px-4 sm:px-8 py-2.5 sm:py-3.5 shadow-soft flex items-center justify-between border border-white">
@@ -567,7 +529,101 @@
 
                 <!-- Grid Kartu Batch PO (Dinamis dari LocalStorage, Tanpa Tombol Order WA) -->
                 <div id="batchPoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 lg:gap-5">
-                    <!-- Di-render oleh renderBatchPO() -->
+                    <!-- Batch Card 1: Doll BTS -->
+                    <div class="bg-cream-card/95 rounded-2xl p-4 sm:p-5 shadow-soft border border-white flex flex-col justify-between transition-bounce hover:-translate-y-1">
+                        <div>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-[11px] font-extrabold bg-coral/15 text-coral px-2.5 py-0.5 rounded-full">K-Pop Collectibles</span>
+                                <span class="text-[11px] font-extrabold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    On Going
+                                </span>
+                            </div>
+                            <h3 class="font-extrabold text-charcoal text-[15.5px] sm:text-base mt-2.5">Doll BTS</h3>
+                            <p class="text-xs font-semibold text-charcoal/65 mt-1 leading-relaxed">Koleksi boneka merchandise official BTS. Batch pre-order sedang berjalan (Display Only).</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-cream-field flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-charcoal/60 flex items-center gap-1">
+                                📋 Display Only
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Batch Card 2: Doll Clothes -->
+                    <div class="bg-cream-card/95 rounded-2xl p-4 sm:p-5 shadow-soft border border-white flex flex-col justify-between transition-bounce hover:-translate-y-1">
+                        <div>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-[11px] font-extrabold bg-coral/15 text-coral px-2.5 py-0.5 rounded-full">Doll Outfit</span>
+                                <span class="text-[11px] font-extrabold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    On Going
+                                </span>
+                            </div>
+                            <h3 class="font-extrabold text-charcoal text-[15.5px] sm:text-base mt-2.5">Doll Clothes</h3>
+                            <p class="text-xs font-semibold text-charcoal/65 mt-1 leading-relaxed">Set pakaian dan aksesoris boneka lucu berbagai ukuran. Batch pre-order sedang berjalan (Display Only).</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-cream-field flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-charcoal/60 flex items-center gap-1">
+                                📋 Display Only
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Batch Card 3: Jeans Languid Park -->
+                    <div class="bg-cream-card/95 rounded-2xl p-4 sm:p-5 shadow-soft border border-white flex flex-col justify-between transition-bounce hover:-translate-y-1">
+                        <div>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-[11px] font-extrabold bg-coral/15 text-coral px-2.5 py-0.5 rounded-full">Streetwear Denim</span>
+                                <span class="text-[11px] font-extrabold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    On Going
+                                </span>
+                            </div>
+                            <h3 class="font-extrabold text-charcoal text-[15.5px] sm:text-base mt-2.5">Jeans Languid Park</h3>
+                            <p class="text-xs font-semibold text-charcoal/65 mt-1 leading-relaxed">Koleksi denim jeans original Languid Park. Batch pre-order sedang berjalan (Display Only).</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-cream-field flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-charcoal/60 flex items-center gap-1">
+                                📋 Display Only
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Batch Card 4: Shirt Languid Park -->
+                    <div class="bg-cream-card/95 rounded-2xl p-4 sm:p-5 shadow-soft border border-white flex flex-col justify-between transition-bounce hover:-translate-y-1">
+                        <div>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-[11px] font-extrabold bg-coral/15 text-coral px-2.5 py-0.5 rounded-full">Fashion Apparel</span>
+                                <span class="text-[11px] font-extrabold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    On Going
+                                </span>
+                            </div>
+                            <h3 class="font-extrabold text-charcoal text-[15.5px] sm:text-base mt-2.5">Shirt Languid Park</h3>
+                            <p class="text-xs font-semibold text-charcoal/65 mt-1 leading-relaxed">Koleksi kemeja trendi Languid Park. Batch pre-order sedang berjalan (Display Only).</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-cream-field flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-charcoal/60 flex items-center gap-1">
+                                📋 Display Only
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Batch Card 5: Backpack Norvincy -->
+                    <div class="bg-cream-card/95 rounded-2xl p-4 sm:p-5 shadow-soft border border-white flex flex-col justify-between transition-bounce hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+                        <div>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-[11px] font-extrabold bg-coral/15 text-coral px-2.5 py-0.5 rounded-full">Bags & Essentials</span>
+                                <span class="text-[11px] font-extrabold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    On Going
+                                </span>
+                            </div>
+                            <h3 class="font-extrabold text-charcoal text-[15.5px] sm:text-base mt-2.5">Backpack Norvincy</h3>
+                            <p class="text-xs font-semibold text-charcoal/65 mt-1 leading-relaxed">Tas ransel fungsional dan stylish dari brand Norvincy. Batch pre-order sedang berjalan (Display Only).</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-cream-field flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-charcoal/60 flex items-center gap-1">
+                                📋 Display Only
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
