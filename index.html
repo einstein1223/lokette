@@ -1863,58 +1863,58 @@
 
             const cleanResi = rawQuery.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
 
-            // 1. Tarik Data Live dari Server Ekspedisi Terlebih Dahulu
-            let foundLiveData = false;
-            if (cleanResi.length >= 4) {
-                setLoading(true);
-                try {
-                    let targetUrl = `track.php?resi=${encodeURIComponent(cleanResi)}`;
-                    if (window.location.protocol === 'file:') {
-                        targetUrl = `http://localhost/lokette/track.php?resi=${encodeURIComponent(cleanResi)}`;
-                    } else if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-                        targetUrl = `api/track?resi=${encodeURIComponent(cleanResi)}`;
-                    }
-
-                    const abortCtrl = new AbortController();
-                    const timeoutId = setTimeout(() => abortCtrl.abort(), 6000);
-
-                    let response = null;
-                    try {
-                        response = await fetch(targetUrl, { signal: abortCtrl.signal });
-                    } catch (fetchErr) {
-                        const fallbackUrl = targetUrl.includes('api/track')
-                            ? `track.php?resi=${encodeURIComponent(cleanResi)}`
-                            : `/api/track?resi=${encodeURIComponent(cleanResi)}`;
-                        try {
-                            response = await fetch(fallbackUrl, { signal: abortCtrl.signal });
-                        } catch (_) {}
-                    } finally {
-                        clearTimeout(timeoutId);
-                    }
-
-                    if (response && response.ok) {
-                        const responseText = await response.text();
-                        try {
-                            const result = JSON.parse(responseText);
-                            if (result.status === 200 && Array.isArray(result.data) && result.data.length > 0) {
-                                const liveData = transformGesData(result.data[0], result.data);
-                                renderResult(liveData);
-                                showToast(`Data resi ${liveData.resi} (${liveData.status}) berhasil ditemukan!`);
-                                foundLiveData = true;
-                                return;
-                            }
-                        } catch (parseErr) {
-                            console.warn('Respon backend bukan JSON valid.');
-                        }
-                    }
-                } catch (err) {
-                    console.warn('Gagal menghubungi server live tracking.');
-                } finally {
-                    setLoading(false);
-                }
+            if (cleanResi.length < 4) {
+                resultContainer.classList.add('hidden');
+                hideResultBtn.classList.add('hidden');
+                showToast('Nomor resi minimal 4 karakter alfanumerik.');
+                return;
             }
 
-            if (foundLiveData) return;
+            // 1. Tarik Data Live dari Server Ekspedisi Terlebih Dahulu
+            setLoading(true);
+            try {
+                let targetUrl = `track.php?resi=${encodeURIComponent(cleanResi)}`;
+                if (window.location.protocol === 'file:') {
+                    targetUrl = `http://localhost/lokette/track.php?resi=${encodeURIComponent(cleanResi)}`;
+                } else if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                    targetUrl = `api/track?resi=${encodeURIComponent(cleanResi)}`;
+                }
+
+                const abortCtrl = new AbortController();
+                const timeoutId = setTimeout(() => abortCtrl.abort(), 6000);
+
+                let response = null;
+                try {
+                    response = await fetch(targetUrl, { signal: abortCtrl.signal });
+                } catch (fetchErr) {
+                    const fallbackUrl = targetUrl.includes('api/track')
+                        ? `track.php?resi=${encodeURIComponent(cleanResi)}`
+                        : `/api/track?resi=${encodeURIComponent(cleanResi)}`;
+                    try {
+                        response = await fetch(fallbackUrl, { signal: abortCtrl.signal });
+                    } catch (_) {}
+                } finally {
+                    clearTimeout(timeoutId);
+                }
+
+                if (response && response.ok) {
+                    const responseText = await response.text();
+                    try {
+                        const result = JSON.parse(responseText);
+                        if (result.status === 200 && Array.isArray(result.data) && result.data.length > 0) {
+                            const liveData = transformGesData(result.data[0], result.data);
+                            renderResult(liveData);
+                            return;
+                        }
+                    } catch (parseErr) {
+                        console.warn('Respon backend bukan JSON valid.');
+                    }
+                }
+            } catch (err) {
+                console.warn('Gagal menghubungi server live tracking.');
+            } finally {
+                setLoading(false);
+            }
 
             // 2. Jika server live sedang error atau tidak merespon, cek kecocokan valid di database internal
             const qLower = rawQuery.toLowerCase();
@@ -1935,16 +1935,13 @@
 
             if (localMatch) {
                 renderResult(localMatch);
-                showToast(`Data resi ${localMatch.resi} (${localMatch.status}) berhasil ditemukan!`);
                 return;
             }
 
-            // 3. Jika resi sembarangan / tidak ditemukan sama sekali di sistem
+            // 3. Jika resi salah / tidak ditemukan sama sekali di sistem
             resultContainer.classList.add('hidden');
             hideResultBtn.classList.add('hidden');
             showToast('Nomor resi tidak ditemukan. Pastikan nomor resi yang dimasukkan sudah benar.');
-
-            showToast('Nomor resi minimal 4 karakter alfanumerik.');
         }
 
         function copyCurrentResi() {
