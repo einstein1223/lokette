@@ -1341,7 +1341,7 @@
                 ket: 'ISI TGL 12/09/2026 - PERKIRAAN TIBA 19/10/2026',
                 logs: [
                     { time: '06 Okt 2026, 15:46 WIB', desc: 'Update: Status [Received] - ISI TGL 12/09/2026 - PERKIRAAN TIBA 19/10/2026' },
-                    { time: '12 Sep 2026, 16:24 WIB', desc: 'Paket terbit di sistem ekspedisi GES Batam (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
+                    { time: '12 Sep 2026, 16:24 WIB', desc: 'Paket terbit di sistem ekspedisi (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
                 ]
             },
             {
@@ -1356,7 +1356,7 @@
                 ket: 'ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU (WAREHOUSE)',
                 logs: [
                     { time: 'Hari ini, 10:45 WIB', desc: 'Update: Status [Received] - ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU' },
-                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
+                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
                 ]
             },
             {
@@ -1371,7 +1371,7 @@
                 ket: 'ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU (WAREHOUSE)',
                 logs: [
                     { time: 'Hari ini, 10:45 WIB', desc: 'Update: Status [Received] - ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU' },
-                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
+                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
                 ]
             },
             {
@@ -1386,7 +1386,7 @@
                 ket: 'ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU (WAREHOUSE)',
                 logs: [
                     { time: 'Hari ini, 10:45 WIB', desc: 'Update: Status [Received] - ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU' },
-                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
+                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
                 ]
             },
             {
@@ -1401,7 +1401,7 @@
                 ket: 'ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU (WAREHOUSE)',
                 logs: [
                     { time: 'Hari ini, 10:45 WIB', desc: 'Update: Status [Received] - ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU' },
-                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
+                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
                 ]
             },
             {
@@ -1416,7 +1416,7 @@
                 ket: 'ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU (WAREHOUSE)',
                 logs: [
                     { time: 'Hari ini, 10:45 WIB', desc: 'Update: Status [Received] - ISI TGL 09/11/2026 - PERKIRAAN TIBA 3-4 MINGGU' },
-                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
+                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi (DO: 09P8/26 K, Marking: 126/EINSTEIN)' }
                 ]
             },
             {
@@ -1804,7 +1804,7 @@
                     if (row.created_at && row.created_at !== row.updated_at) {
                         logs.push({
                             time: formatDateTime(row.created_at),
-                            desc: `Paket terbit di sistem ekspedisi GES Batam (DO: ${row.no_do || '-'}, Marking: ${row.marking || '-'})`
+                            desc: `Paket terbit di sistem ekspedisi (DO: ${row.no_do || '-'}, Marking: ${row.marking || '-'})`
                         });
                     }
                 });
@@ -1826,7 +1826,7 @@
                 status: statusLabel,
                 statusColor: statusColor,
                 step: step,
-                ket: primaryItem.keterangan || 'Paket tercatat di server tracking GES Batam.',
+                ket: primaryItem.keterangan || 'Paket sedang dalam proses pengiriman.',
                 logs: logs
             };
         }
@@ -1863,7 +1863,8 @@
 
             const cleanResi = rawQuery.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
 
-            // 1. Tarik Data Live dari Server Ekspedisi GES Batam Terlebih Dahulu (dengan batas timeout 6 detik agar tidak pernah macet)
+            // 1. Tarik Data Live dari Server Ekspedisi Terlebih Dahulu
+            let foundLiveData = false;
             if (cleanResi.length >= 4) {
                 setLoading(true);
                 try {
@@ -1898,21 +1899,24 @@
                             if (result.status === 200 && Array.isArray(result.data) && result.data.length > 0) {
                                 const liveData = transformGesData(result.data[0], result.data);
                                 renderResult(liveData);
-                                showToast(`Data live berhasil ditarik dari server GES Batam! (${liveData.resi})`);
+                                showToast(`Data resi ${liveData.resi} (${liveData.status}) berhasil ditemukan!`);
+                                foundLiveData = true;
                                 return;
                             }
                         } catch (parseErr) {
-                            console.warn('Respon backend bukan JSON valid, menggunakan data lokal.');
+                            console.warn('Respon backend bukan JSON valid.');
                         }
                     }
                 } catch (err) {
-                    console.warn('Koneksi live GES terhalang, mengecek data lokal...');
+                    console.warn('Gagal menghubungi server live tracking.');
                 } finally {
                     setLoading(false);
                 }
             }
 
-            // 2. Jika live backend tidak merespon / tidak ada di GES, cek data database internal
+            if (foundLiveData) return;
+
+            // 2. Jika server live sedang error atau tidak merespon, cek kecocokan valid di database internal
             const qLower = rawQuery.toLowerCase();
             const localMatch = mockDatabase.find(item => {
                 const itemResiClean = (item.resi || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
@@ -1920,12 +1924,12 @@
                 const itemPoClean = (item.po || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
                 const itemMkClean = (item.marking || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
 
+                // Pencocokan ketat untuk resi asli
                 if (item.resi && item.resi.toLowerCase() === qLower) return true;
-                if (itemResiClean && (itemResiClean === cleanResi || (cleanResi.length >= 3 && (itemResiClean.includes(cleanResi) || cleanResi.includes(itemResiClean))))) return true;
-                if (item.do && (item.do.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemDoClean.includes(cleanResi) || cleanResi.includes(itemDoClean))))) return true;
-                if (item.po && (item.po.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemPoClean.includes(cleanResi) || cleanResi.includes(itemPoClean))))) return true;
-                if (item.marking && (item.marking.toLowerCase().includes(qLower) || (cleanResi.length >= 3 && (itemMkClean.includes(cleanResi) || cleanResi.includes(itemMkClean))))) return true;
-                if (qLower.includes('warehouse') || qLower.includes('wh') || qLower.includes('gudang') || qLower.includes('einstein')) return true;
+                if (itemResiClean && itemResiClean === cleanResi) return true;
+                if (item.do && (item.do.toLowerCase() === qLower || itemDoClean === cleanResi)) return true;
+                if (item.po && (item.po.toLowerCase() === qLower || itemPoClean === cleanResi)) return true;
+                if (item.marking && (item.marking.toLowerCase() === qLower || itemMkClean === cleanResi)) return true;
                 return false;
             });
 
@@ -1935,24 +1939,10 @@
                 return;
             }
 
-            // 3. Fallback Cerdas: Pastikan resi selalu tampil dengan status Warehouse Lokette
-            const dynamicWarehouse = {
-                resi: rawQuery.toUpperCase(),
-                do: '09P8/26 K',
-                po: '09P8/26 K',
-                marking: '126/EINSTEIN',
-                nama: '',
-                status: 'Diterima di Gudang (Received)',
-                statusColor: 'bg-amber-100 text-amber-800 border border-amber-300/60',
-                step: 2,
-                ket: 'ISI TGL 12/09/2026 - PERKIRAAN TIBA 19/10/2026',
-                logs: [
-                    { time: 'Hari ini, 10:45 WIB', desc: `Resi ${rawQuery.toUpperCase()} telah diterima di Warehouse Lokette (Status: Received).` },
-                    { time: '07 Nov 2026, 08:20 WIB', desc: 'Paket terbit di sistem ekspedisi GES Batam (DO: 09P8/26 K, Marking: 126/EINSTEIN).' }
-                ]
-            };
-            renderResult(dynamicWarehouse);
-            showToast(`Data resi ${dynamicWarehouse.resi} (Status: Received) berhasil ditemukan!`);
+            // 3. Jika resi sembarangan / tidak ditemukan sama sekali di sistem
+            resultContainer.classList.add('hidden');
+            hideResultBtn.classList.add('hidden');
+            showToast('Nomor resi tidak ditemukan. Pastikan nomor resi yang dimasukkan sudah benar.');
 
             showToast('Nomor resi minimal 4 karakter alfanumerik.');
         }
