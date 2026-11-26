@@ -20,7 +20,7 @@ if ($resi === '' || strlen($resi) < 4) {
     exit;
 }
 
-// Mapping cerdas: Hubungkan DO / Marking ke resi resmi GES Batam
+// Mapping cerdas: Hubungkan DO / Marking ke resi resmi server tracking
 if ($resi === '09P826K' || $resi === '09P8' || strpos($resi, 'EINSTEIN') !== false || $resi === 'LKTWH2026' || $resi === 'WH2026') {
     $resi = 'YT7643297485802';
 }
@@ -69,7 +69,7 @@ if (!$token) {
 
 if (!$token) {
     http_response_code(502);
-    echo json_encode(['status' => 502, 'message' => 'Gagal mengambil security token dari sistem GES Batam.']);
+    echo json_encode(['status' => 502, 'message' => 'Gagal mengambil security token dari sistem server tracking.']);
     exit;
 }
 
@@ -112,7 +112,7 @@ if ($result['code'] !== 200) {
     http_response_code($result['code'] ?: 502);
     echo json_encode([
         'status' => $result['code'] ?: 502,
-        'message' => 'Server GES Batam merespon dengan status HTTP ' . $result['code']
+        'message' => 'Server server tracking merespon dengan status HTTP ' . $result['code']
     ]);
     exit;
 }
@@ -120,13 +120,13 @@ if ($result['code'] !== 200) {
 $data = json_decode($result['body'], true);
 if (!is_array($data)) {
     http_response_code(502);
-    echo json_encode(['status' => 502, 'message' => 'Format jawaban dari server ekspedisi GES Batam tidak dikenali.']);
+    echo json_encode(['status' => 502, 'message' => 'Format jawaban dari server ekspedisi server tracking tidak dikenali.']);
     exit;
 }
 
 if (count($data) === 0) {
     http_response_code(404);
-    echo json_encode(['status' => 404, 'message' => 'Nomor resi tidak ditemukan di sistem tracking GES Batam.']);
+    echo json_encode(['status' => 404, 'message' => 'Nomor resi tidak ditemukan di sistem tracking server tracking.']);
     exit;
 }
 

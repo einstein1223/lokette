@@ -457,7 +457,7 @@
                             <span id="valPO" class="text-sm sm:text-[15px] font-bold text-charcoal/80 mt-0.5 sm:mt-0 break-all sm:text-right"></span>
                         </div>
 
-                        <!-- Baris 3: Marking (Format Resmi GES Batam, Tanpa Nama) -->
+                        <!-- Baris 3: Marking (Format Resmi, Tanpa Nama) -->
                         <div id="rowMarking" class="result-box bg-cream-field rounded-2xl px-3.5 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between transition-all gap-1 sm:gap-2">
                             <span id="lblMarking" class="font-extrabold text-charcoal text-[13.5px] sm:text-[15px]">Marking</span>
                             <span id="valNama" class="text-sm sm:text-[15px] font-bold text-charcoal/80 mt-0.5 sm:mt-0 break-words sm:text-right"></span>
@@ -1698,7 +1698,7 @@
             }
             valPO.textContent = data.do ? data.do : (data.po || '-');
 
-            // Baris 3: Marking (Hilangkan Nama pribadi, samakan dengan sistem GES Batam)
+            // Baris 3: Marking (Hilangkan Nama pribadi, samakan dengan format standar)
             const rowMarking = document.getElementById('rowMarking');
             const lblMarking = document.getElementById('lblMarking');
             const displayMarking = data.marking || data.nama || '';
@@ -1819,7 +1819,7 @@
                     if (row.created_at && row.created_at !== row.updated_at) {
                         logs.push({
                             time: formatDateTime(row.created_at),
-                            desc: `Paket terbit di sistem ekspedisi (DO: ${row.no_do || '-'}, Marking: ${row.marking || '-'})`
+                            desc: `Paket terdaftar di sistem Lokette (DO: ${row.no_do || '-'}, Marking: ${row.marking || '-'})`
                         });
                     }
                 });
@@ -1885,7 +1885,7 @@
                 return;
             }
 
-            // 1. Tarik Data Live dari Server Ekspedisi Terlebih Dahulu
+            // 1. Cek Data Live dari Server Tracking Terlebih Dahulu
             setLoading(true);
             try {
                 let targetUrl = `track.php?resi=${encodeURIComponent(cleanResi)}`;
@@ -1926,12 +1926,12 @@
                     }
                 }
             } catch (err) {
-                console.warn('Gagal menghubungi server live tracking.');
+                console.warn('Server tracking tidak merespon.');
             } finally {
                 setLoading(false);
             }
 
-            // 2. Jika server live sedang error atau tidak merespon, cek kecocokan valid di database internal
+            // 2. Jika server tracking tidak merespon, cek di database internal
             const qLower = rawQuery.toLowerCase();
             const localMatch = mockDatabase.find(item => {
                 const itemResiClean = (item.resi || '').replace(/[^A-Za-z0-9]/g, '').toUpperCase();

@@ -1,4 +1,4 @@
-// Vercel Serverless Function: Proxy Lacak Resi Live GES Batam
+// Vercel Serverless Function: Proxy Lacak Resi Live Lokette
 // Digunakan secara otomatis saat di-deploy ke Vercel
 
 let tokenCache = {
@@ -35,7 +35,7 @@ async function getGesToken() {
                        html.match(/<meta\s+content=["']([^"']+)["']\s+name=["']tracking-token["']/i);
 
     if (!tokenMatch || !tokenMatch[1]) {
-        throw new Error('Gagal mendapatkan security tracking token dari server GES Batam.');
+        throw new Error('Gagal mendapatkan token autentikasi sistem tracking.');
     }
 
     tokenCache = {
@@ -69,7 +69,7 @@ export default async function handler(req, res) {
         });
     }
 
-    // Mapping cerdas: Jika user memasukkan nomor DO atau Marking paket Lokette, hubungkan ke resi resminya di GES Batam
+    // Mapping cerdas: Jika user memasukkan nomor DO atau Marking, hubungkan ke resi resminya
     if (cleanResi === '09P826K' || cleanResi === '09P8' || cleanResi.includes('EINSTEIN') || cleanResi === 'LKTWH2026' || cleanResi === 'WH2026') {
         cleanResi = 'YT7643297485802';
     }
@@ -77,7 +77,7 @@ export default async function handler(req, res) {
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 
     try {
-        // Ambil token keamanan dan cookies resmi dari GES Batam
+        // Ambil token keamanan dan cookies dari server tracking
         const { token, cookies } = await getGesToken();
 
         const targetUrl = `https://www.gesbatam.com/Tracking/lacakResi?noresiTags=${encodeURIComponent(cleanResi)}`;
@@ -119,7 +119,7 @@ export default async function handler(req, res) {
         if (!gesResponse.ok) {
             return res.status(502).json({
                 status: 502,
-                message: `Server ekspedisi GES Batam memberikan respon HTTP ${gesResponse.status}. Coba beberapa saat lagi.`
+                message: `Server tracking merespon dengan status ${gesResponse.status}. Coba beberapa saat lagi.`
             });
         }
 
@@ -128,14 +128,14 @@ export default async function handler(req, res) {
         if (!Array.isArray(data)) {
             return res.status(502).json({
                 status: 502,
-                message: 'Format jawaban dari server ekspedisi GES Batam tidak dikenali.'
+                message: 'Format jawaban dari server tracking tidak dikenali.'
             });
         }
 
         if (data.length === 0) {
             return res.status(404).json({
                 status: 404,
-                message: 'Nomor resi tidak ditemukan di sistem tracking GES Batam. Periksa kembali nomor resimu.'
+                message: 'Nomor resi tidak ditemukan. Periksa kembali nomor resimu.'
             });
         }
 
@@ -148,8 +148,8 @@ export default async function handler(req, res) {
         return res.status(502).json({
             status: 502,
             message: isTimeout 
-                ? 'Koneksi ke server GES Batam mengalami timeout (lebih dari 12 detik). Silakan coba lagi.'
-                : 'Gagal terhubung ke server ekspedisi GES Batam: ' + err.message
+                ? 'Koneksi ke server tracking timeout (lebih dari 12 detik). Silakan coba lagi.'
+                : 'Gagal terhubung ke server tracking: ' + err.message
         });
     }
 }
